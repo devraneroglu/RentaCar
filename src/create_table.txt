@@ -1,0 +1,44 @@
+CREATE TABLE car(
+	car_id SERIAL PRIMARY KEY,
+	car_model_id INTEGER REFERENCES model(model_id),
+	car_color VARCHAR(30),
+	car_km FLOAT,
+	car_plate VARCHAR(30)
+)
+
+
+CREATE TABLE model(
+	model_id SERIAL PRIMARY KEY,
+	model_brand_id INTEGER REFERENCES brand(brand_id),
+	model_name VARCHAR(30),
+	model_type VARCHAR(30),
+	model_year INTEGER,
+	model_fuel VARCHAR(30),
+	model_gear VARCHAR(30)
+
+)
+CREATE TABLE brand(
+ brand_id SERIAL PRIMARY KEY,
+	brand_name VARCHAR(30)
+)
+
+CREATE TABLE book(
+    book_id SERIAL PRIMARY KEY,
+	book_car_id INTEGER REFERENCES car(car_id),
+	book_name VARCHAR(30),
+	book_idno VARCHAR(30),
+	book_mpno VARCHAR(30),
+	book_mail VARCHAR(100),
+	book_str_date DATE,
+	book_fnsh_date DATE,
+	book_prc FLOAT,
+	book_case VARCHAR(30),
+	book_note VARCHAR(100)
+)
+
+CREATE TABLE users (
+	user_id SERIAL PRIMARY KEY,
+	user_name VARCHAR(30),
+	user_pass VARCHAR(30),
+	user_role VARCHAR(30)
+)
