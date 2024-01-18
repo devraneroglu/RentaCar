@@ -1,0 +1,23 @@
+# KATMANLI MIMARI
+* ENTITY
+- Veritabanında karşılığı olan tablolar / nesneler 0
+
+* DAL / DAO / REPOSITORY
+- Veritabanı ile yaptığımız haberleştiğimiz kodlar yazılır , sql kodları burada bulunur.
+
+* BUSINESS / SERVICE / MANAGER
+- İş mantıkları yönetilir.
+- Örneğin silme işlemi yapacağız. Silme işlemi yapacağımız id içeride mevcut mu ?
+- Örneğin yasaklı markayı veritabanına kayde
+
+* CORE / UTIL
+- Yardımcı metodlar
+- Tekrar edilen işler
+
+* VIEW / CONTROLLER
+- gui, swing projesinde view
+- Springde Controlleri kullancaz
+
+
+
+
