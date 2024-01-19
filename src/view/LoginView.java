@@ -1,11 +1,13 @@
 package view;
 
+import business.UserManager;
 import core.Helper;
+import entitiy.User;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginView extends JFrame {
+public class LoginView extends Layaout {
     private JPanel container;
     private JPanel w_top;
     private JLabel lbl_welcome;
@@ -16,17 +18,14 @@ public class LoginView extends JFrame {
     private JButton btn_login;
     private JLabel lbl_username;
     private JLabel lbl_pass;
+    private final UserManager userManager;
+
 
     public LoginView() {
-        this.add(container);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setTitle("Rent a Car");
-        this.setSize(400, 400);
 
-        //    int x = (Toolkit.getDefaultToolkit().getScreenSize().width - this.getSize().width) / 2;
-        //    int y = (Toolkit.getDefaultToolkit().getScreenSize().height - this.getSize().height) / 2;
-        this.setLocation(Helper.getLocationPoint("x", this.getSize()), Helper.getLocationPoint("y", this.getSize()));
-        this.setVisible(true);
+        this.userManager = new UserManager();
+        this.add(container);
+        this.initilizeGui(400, 400);
         btn_login.addActionListener(e -> {
 /*            if (Helper.isFieldEmpty(this.fld_username) || Helper.isFieldEmpty(this.fld_pass)) {
                 Helper.showMsg("fill");
@@ -35,6 +34,15 @@ public class LoginView extends JFrame {
 
             if (Helper.isFieldListEmpty(checkFieldList)) {
                 Helper.showMsg("fill");
+            } else {
+                User loginuser = this.userManager.findByLogin(this.fld_username.getText(), this.fld_pass.getText());
+                if (loginuser == null) {
+                    Helper.showMsg("notFound");
+                } else {
+                    //  System.out.println(loginuser.toString());
+                    AdminView adminView = new AdminView(loginuser);
+                    dispose();
+                }
             }
         });
     }
