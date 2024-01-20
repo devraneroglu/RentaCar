@@ -1,6 +1,7 @@
 package view;
 
 import business.BrandManager;
+import core.Helper;
 import entitiy.Brand;
 import entitiy.User;
 
@@ -64,7 +65,7 @@ public class AdminView extends Layaout {
         });
         brandMenu.add("Güncelle").addActionListener(e -> {
             // seçili olan brandı almak gerekir.
-            int selectBrandId = Integer.parseInt(tbl_brand.getValueAt(tbl_brand.getSelectedRow(), 0).toString());
+            int selectBrandId = this.getTableSelectedRow(tbl_brand, 0);
             BrandView brandView = new BrandView(this.brandManager.getById(selectBrandId));
             brandView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -73,7 +74,18 @@ public class AdminView extends Layaout {
                 }
             });
         });
-        brandMenu.add("Sil");
+        brandMenu.add("Sil").addActionListener(e -> {
+            if (Helper.confirm("sure")) {
+                int selectBrandId = this.getTableSelectedRow(tbl_brand, 0);
+                if (this.brandManager.delete(selectBrandId)) {
+                    Helper.showMsg("done");
+                    loadBrandTable();
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+
+        });
 
     }
 

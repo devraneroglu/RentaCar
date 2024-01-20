@@ -46,4 +46,12 @@ public class BrandManager {
         }
         return this.brandDao.update(brand);
     }
+
+    public Boolean delete(int id) {                       // ID yi kontrol et eğer input id db de varsa koşul sağlanıyorsa --> Dao daki delete e git;
+        if (this.getById(id) == null) {
+            Helper.showMsg(id + "ID kayıtlı marka bulunamadı ");
+            return false;
+        }
+        return this.brandDao.delete(id);
+    }
 }
