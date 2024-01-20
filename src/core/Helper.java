@@ -40,6 +40,11 @@ public class Helper {
                 msg = str + " bulunamadı  !";
                 title = "Kayıt bulunamadı ";
                 break;
+            case "error":
+                msg = "Hatalı işlem yaptınız";
+                title = "Hata";
+                break;
+
             default:
                 msg = str;
                 title = "Mesaj";

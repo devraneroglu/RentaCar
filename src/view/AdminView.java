@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class AdminView extends Layaout {
@@ -33,19 +35,15 @@ public class AdminView extends Layaout {
             dispose();
         }
         this.lbl_welcome.setText("Hoşgeldiniz " + this.user.getUsername());
-        Object[] col_brand = {"Marka ID", "Marka Adı"};          //veri tipini object olarak seçmek daha doğru bir yaklaşımdır.
-        ArrayList<Brand> brandList = brandManager.findAll();
-        tmdl_brand.setColumnIdentifiers(col_brand);
 
-        for (Brand brand : brandList) {
-            Object[] obj = {brand.getId(), brand.getName()};
-            tmdl_brand.addRow(obj);
-        }
+        loadBrandTable();
+        loadBrandCompanent();
 
-        tbl_brand.setModel(tmdl_brand);
-        tbl_brand.getTableHeader().setReorderingAllowed(false);
-        tbl_brand.setEnabled(false);
-        this.tbl_brand.addMouseListener(new MouseAdapter() {
+        this.tbl_brand.setComponentPopupMenu(brandMenu);
+    }
+
+    public void loadBrandCompanent() {
+        this.tbl_brand.addMouseListener(new MouseAdapter() {     // sağ click seçenekleri
             @Override
             public void mousePressed(MouseEvent e) {
                 //  super.mousePressed(e);
@@ -53,14 +51,52 @@ public class AdminView extends Layaout {
                 tbl_brand.setRowSelectionInterval(selected_row, selected_row);
             }
         });
+
         this.brandMenu = new JPopupMenu();
         brandMenu.add("Yeni").addActionListener(e -> {
-            System.out.println("Yeni butonuna tıkladınız ");
+            BrandView brandView = new BrandView(null);
+            brandView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadBrandTable();
+                }
+            });
         });
-        brandMenu.add("Güncelle");
+        brandMenu.add("Güncelle").addActionListener(e -> {
+            // seçili olan brandı almak gerekir.
+            int selectBrandId = Integer.parseInt(tbl_brand.getValueAt(tbl_brand.getSelectedRow(), 0).toString());
+            BrandView brandView = new BrandView(this.brandManager.getById(selectBrandId));
+            brandView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadBrandTable();
+                }
+            });
+        });
         brandMenu.add("Sil");
 
-        this.tbl_brand.setComponentPopupMenu(brandMenu);
+    }
+
+    public void loadBrandTable() {
+        Object[] col_brand = {"Marka ID", "Marka Adı"};          //veri tipini object olarak seçmek daha doğru bir yaklaşımdır.
+        // ArrayList<Brand> brandList = this.brandManager.findAll();
+        ArrayList<Object[]> brandList = this.brandManager.getForTable(col_brand.length);
+        this.createTable(this.tmdl_brand, this.tbl_brand, col_brand, brandList);
+        /*
+        tmdl_brand.setColumnIdentifiers(col_brand);
+        tbl_brand.setModel(tmdl_brand);
+        tbl_brand.getTableHeader().setReorderingAllowed(false);
+        tbl_brand.setEnabled(false);
+
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_brand.getModel();  // generic yapıya uymadığı için
+        clearModel.setRowCount(0);      // her defasında tablonun içini boşaltır  --> [SQL TRUNCATE]
+
+        for (Brand brand : brandList) {
+            Object[] obj = {brand.getId(), brand.getName()};
+            tmdl_brand.addRow(obj);
+        }
+        */
+
 
     }
 }

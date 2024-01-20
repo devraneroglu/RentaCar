@@ -12,6 +12,6 @@ public class App {
         // Connection con = Db.getInstance();
         Helper.setTheme();
         UserManager usermanager = new UserManager();
-        AdminView adminView = new AdminView(usermanager.findByLogin("admin", "1234"));
+        AdminView adminView = new AdminView(usermanager.findByLogin("admin",    "1234"));
     }
 }
