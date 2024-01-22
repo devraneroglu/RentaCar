@@ -1,6 +1,6 @@
 # KATMANLI MIMARI
 * ENTITY
-- Veritabanında karşılığı olan tablolar / nesneler 0
+- Veritabanında karşılığı olan tablolar / nesneler
 
 * DAL / DAO / REPOSITORY
 - Veritabanı ile yaptığımız haberleştiğimiz kodlar yazılır , sql kodları burada bulunur.

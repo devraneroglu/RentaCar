@@ -24,7 +24,21 @@ public class Model {
 
     public enum Type {
         SEDAN,
-        HACHBACK
+        HACBACK
+    }
+
+    @Override
+    public String toString() {
+        return "Model{" +
+                "id=" + id +
+                ", brand_id=" + brand_id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", year='" + year + '\'' +
+                ", fuel=" + fuel +
+                ", gear=" + gear +
+                ", brand=" + brand.getName() +
+                '}';
     }
 
     public int getId() {

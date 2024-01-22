@@ -1,0 +1,8 @@
+
+ * Nullpointer
+
+
+ * [entitiy.Model@4dc941c]
+ - Javada bir sınıfın toString metodunu, o sınıfa ait nesnelerin metinsel bir temsilini oluşturmak için kullanılır.
+ Eğer  bu metot doğru bir şekilde implemente edilmezse, nesnelerin varsayılan toString metodu çağrılır
+ ve genellikle bellek adresi veya sınıf adı gibi bilgiler içeren metin elde edilir.

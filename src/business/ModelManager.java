@@ -3,6 +3,7 @@ package business;
 import core.Helper;
 import dao.ModelDao;
 import entitiy.Model;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 
@@ -80,4 +81,33 @@ public class ModelManager {
     public ArrayList<Model> getByListBrandId(int brandId) {
         return this.modelDao.getByListBrandId(brandId);
     }
+
+    public ArrayList<Model> searchForTable(int brandId, Model.Fuel fuel, Model.Gear gear, Model.Type type) {
+        String select = "SELECT * FROM public.model";
+        ArrayList<String> whereList = new ArrayList<>();
+        if (brandId != 0) {
+            whereList.add("model_brand_id = " + brandId);
+        }
+        if (fuel != null) {
+            whereList.add("model_fuel = '" + fuel.toString() + "' ");
+        }
+        if (gear != null) {
+            whereList.add("model_gear = '" + gear.toString() + "' ");
+        }
+        if (type != null) {
+            whereList.add("model_type = '" + type.toString() + "' ");
+        }
+
+        String whereStr = String.join(" AND ", whereList);
+
+        String query = select;
+        if (!whereStr.isEmpty()) {
+            query += " WHERE " + whereStr;
+        }
+        return this.modelDao.selectByQuery(query);
+
+//        System.out.println(whereList);
+//        return this.modelDao.getByListBrandId(brandId);
+    }
+
 }
