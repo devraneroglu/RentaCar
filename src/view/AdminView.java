@@ -102,20 +102,7 @@ public class AdminView extends Layaout {
         loadBookingCompanent();
         loadBookingFilter();
 
-        btn_booking_save.addActionListener(e -> {
-            ArrayList<Car> carList = this.carManager.searchByBooking(
-                    fld_begdate.getText(),
-                    fld_enddate.getText(),
-                    (Model.Type) cmb_booking_type.getSelectedItem(),
-                    (Model.Gear) cmb_booking_gear.getSelectedItem(),
-                    (Model.Fuel) cmb_booking_fuel.getSelectedItem()
-            );
-            ArrayList<Object[]> carBookingRow = this.carManager.getForTable(this.col_car.length, carList);
-            loadBookingTable(carBookingRow);
-        });
-        btn_booking_delete.addActionListener(e -> {
-            loadBookingFilter();
-        });
+
     }
 
     public void loadBrandCompanent() {
@@ -334,9 +321,38 @@ public class AdminView extends Layaout {
     public void loadBookingCompanent() {
         tableRowSelect(this.tbl_booking);
         this.booking_menu = new JPopupMenu();
-        booking_menu.add("Rezervasyon yap").addActionListener(e -> {
+        this.booking_menu.add("Rezervasyon yap").addActionListener(e -> {
+            int selectCarId = this.getTableSelectedRow(this.tbl_booking, 0);
+            BookingView bookingView = new BookingView(
+                    this.carManager.getById(selectCarId),
+                    this.fld_begdate.getText(),
+                    this.fld_enddate.getText()
+            );
+            bookingView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadBookingTable(null);
+                    loadBookingFilter();
+                }
+            });
         });
         this.tbl_booking.setComponentPopupMenu(booking_menu);
+
+        btn_booking_save.addActionListener(e -> {
+            ArrayList<Car> carList = this.carManager.searchByBooking(
+                    fld_begdate.getText(),
+                    fld_enddate.getText(),
+                    (Model.Type) cmb_booking_type.getSelectedItem(),
+                    (Model.Gear) cmb_booking_gear.getSelectedItem(),
+                    (Model.Fuel) cmb_booking_fuel.getSelectedItem()
+            );
+            ArrayList<Object[]> carBookingRow = this.carManager.getForTable(this.col_car.length, carList);
+            loadBookingTable(carBookingRow);
+        });
+        btn_booking_delete.addActionListener(e -> {
+            loadBookingFilter();
+        });
+
     }
 
     public void loadBookingFilter() {
