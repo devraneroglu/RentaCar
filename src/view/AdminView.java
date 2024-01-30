@@ -102,7 +102,6 @@ public class AdminView extends Layaout {
         loadBookingCompanent();
         loadBookingFilter();
 
-
     }
 
     public void loadBrandCompanent() {

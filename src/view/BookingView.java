@@ -40,7 +40,7 @@ public class BookingView extends Layaout {
         this.fld_enddate.setText(enddate);
 
         btn_save_book.addActionListener(e -> {
-            JTextField[] checkFieldLsit = {
+            JTextField[] checkFieldList = {
                     this.flb_customer_name,
                     this.fld_TCkn,
                     this.fld_telnr,
@@ -50,7 +50,7 @@ public class BookingView extends Layaout {
                     this.fld_begdate,
                     this.fld_enddate
             };
-            if (Helper.isFieldListEmpty(checkFieldLsit)) {
+            if (Helper.isFieldListEmpty(checkFieldList)) {
                 Helper.showMsg("fill");
             } else {
                 Book book = new Book();

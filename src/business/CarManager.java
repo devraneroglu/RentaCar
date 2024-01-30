@@ -82,7 +82,8 @@ public class CarManager {
 
         start_date = LocalDate.parse(start_date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
         finish_date = LocalDate.parse(finish_date, DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString();
-
+        System.out.println(start_date);
+        System.out.println(finish_date);
 
         if (gear != null) where.add("model.model_gear = '" + gear.toString() + "' ");
         if (fuel != null) where.add("model.model_fuel = '" + fuel.toString() + "' ");
@@ -90,8 +91,12 @@ public class CarManager {
 
         String whereStr = String.join(" AND ", where);
         String joinStr = String.join(" AND ", joinWhere);
-        if (joinStr.length() > 0) query += " ON " + joinStr;
-        if (whereStr.length() > 0) query += " WHERE " + whereStr;
+        if (joinStr.length() > 0) {
+            query += " ON " + joinStr;
+        }
+        if (whereStr.length() > 0) {
+            query += " WHERE " + whereStr;
+        }
 
         ArrayList<Car> searchedCarList = this.carDao.selectByQuery(query);
         bookOrWhere.add(" ( '" + start_date + "' BETWEEN book_str_date AND book_fnsh_date  ) ");
@@ -110,11 +115,11 @@ public class CarManager {
         searchedCarList.removeIf(car -> busyCarID.contains(car.getId()));
 
         // System.out.println(busyCarList);
-        // System.out.println(bookQuery);
+        //  System.out.println(bookQuery);
 
-        //    System.out.println(query);
+        // System.out.println(query);
         //    return new ArrayList<>();
-        //  return this.carDao.selectByQuery(query);
+        // return this.carDao.selectByQuery(query);
         return searchedCarList;
     }
 
